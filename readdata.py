@@ -52,10 +52,11 @@ class Dexcom(object):
       types = ['METER_DATA', 'EGV_DATA', 'USER_EVENT_DATA', 'INSERTION_TIME']
       for t in types:
         records = dex.ReadRecords(t)
-        print '    {0}.txt: {1} records'.format(t, len(records))
-        with open('%s.txt' % t, 'w') as f:
+        print '    {0}.csv: {1} records'.format(t, len(records))
+        with open('%s.csv' % t, 'w') as f:
+          f.write('{0}\n'.format(records[0].csv_header()))
           for r in records:
-            f.write('{0}\n'.format(r))
+            f.write('{0}\n'.format(r.csv()))
 
   def __init__(self, port):
     self._port_name = port

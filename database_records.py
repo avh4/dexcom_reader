@@ -95,6 +95,12 @@ class InsertionRecord(GenericTimestampedRecord):
   def __repr__(self):
     return '%s:  state=%s' % (self.display_time, self.session_state)
 
+  @staticmethod
+  def csv_header():
+    return 'display_time,session_state'
+  def csv(self):
+    return '{0},{1}'.format(self.display_time, self.session_state)
+
 
 class MeterRecord(GenericTimestampedRecord):
   FORMAT = '<2IHIH'
@@ -109,6 +115,12 @@ class MeterRecord(GenericTimestampedRecord):
 
   def __repr__(self):
     return '%s: Meter BG:%s' % (self.display_time, self.meter_glucose)
+
+  @staticmethod
+  def csv_header():
+    return 'display_time,meter_glucose'
+  def csv(self):
+    return '{0},{1}'.format(self.display_time, self.meter_glucose)
 
 
 class EventRecord(GenericTimestampedRecord):
@@ -144,6 +156,12 @@ class EventRecord(GenericTimestampedRecord):
   def __repr__(self):
     return '%s:  event_type=%s sub_type=%s value=%s' % (self.display_time, self.event_type,
                                     self.event_sub_type, self.event_value)
+
+  @staticmethod
+  def csv_header():
+    return 'display_time,event_type,event_sub_type,event_value'
+  def csv(self):
+    return '{0},{1},{2},{3}'.format(self.display_time, self.event_type, self.event_sub_type or '', self.event_value)
 
 
 class EGVRecord(GenericTimestampedRecord):
@@ -187,3 +205,9 @@ class EGVRecord(GenericTimestampedRecord):
     else:
       return '%s: CGM BG:%s (%s) DO:%s' % (self.display_time, self.glucose,
                                            self.trend_arrow, self.display_only)
+
+  @staticmethod
+  def csv_header():
+    return 'display_time,glucose,trend,display_only'
+  def csv(self):
+    return '{0},{1},{2},{3}'.format(self.display_time, self.glucose, self.trend_arrow, self.display_only)
