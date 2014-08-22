@@ -99,7 +99,7 @@ class InsertionRecord(GenericTimestampedRecord):
   def csv_header():
     return 'display_time,session_state'
   def csv(self):
-    return '{0},{1}'.format(self.display_time, self.session_state)
+    return '{0},{1}'.format(self.display_time.isoformat(), self.session_state)
 
 
 class MeterRecord(GenericTimestampedRecord):
@@ -120,7 +120,7 @@ class MeterRecord(GenericTimestampedRecord):
   def csv_header():
     return 'display_time,meter_glucose'
   def csv(self):
-    return '{0},{1}'.format(self.display_time, self.meter_glucose)
+    return '{0},{1}'.format(self.display_time.isoformat(), self.meter_glucose)
 
 
 class EventRecord(GenericTimestampedRecord):
@@ -161,7 +161,7 @@ class EventRecord(GenericTimestampedRecord):
   def csv_header():
     return 'display_time,event_type,event_sub_type,event_value'
   def csv(self):
-    return '{0},{1},{2},{3}'.format(self.display_time, self.event_type, self.event_sub_type or '', self.event_value)
+    return '{0},{1},{2},{3}'.format(self.display_time.isoformat(), self.event_type, self.event_sub_type or '', self.event_value)
 
 
 class EGVRecord(GenericTimestampedRecord):
@@ -210,4 +210,4 @@ class EGVRecord(GenericTimestampedRecord):
   def csv_header():
     return 'display_time,glucose,trend,display_only'
   def csv(self):
-    return '{0},{1},{2},{3}'.format(self.display_time, self.glucose, self.trend_arrow, self.display_only)
+    return '{0},{1},{2},{3}'.format(self.display_time.isoformat(), self.glucose, self.trend_arrow, self.display_only)
