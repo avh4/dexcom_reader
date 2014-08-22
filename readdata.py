@@ -48,13 +48,14 @@ class Dexcom(object):
       print 'Transmitter paired: %s' % dex.ReadTransmitterId()
       print 'Battery Status: %s (%d%%)' % (dex.ReadBatteryState(),
                                            dex.ReadBatteryLevel())
-      print 'Record count:'
-      print '- Meter records: %d' % (len(dex.ReadRecords('METER_DATA')))
-      print '- CGM records: %d' % (len(dex.ReadRecords('EGV_DATA')))
-      print ('- CGM commitable records: %d'
-             % (len([not x.display_only for x in dex.ReadRecords('EGV_DATA')])))
-      print '- Event records: %d' % (len(dex.ReadRecords('USER_EVENT_DATA')))
-      print '- Insertion records: %d' % (len(dex.ReadRecords('INSERTION_TIME')))
+      print 'Exporting records:'
+      types = ['METER_DATA', 'EGV_DATA', 'USER_EVENT_DATA', 'INSERTION_TIME']
+      for t in types:
+        records = dex.ReadRecords(t)
+        print '    {0}.txt: {1} records'.format(t, len(records))
+        with open('%s.txt' % t, 'w') as f:
+          for r in records:
+            f.write('{0}\n'.format(r))
 
   def __init__(self, port):
     self._port_name = port
